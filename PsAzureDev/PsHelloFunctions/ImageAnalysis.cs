@@ -9,16 +9,20 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace PsHelloFunctions
 {
+
     public static class ImageAnalysis
     {
+
+        public const string ENDPOINT = "https://psfaceapijobin.cognitiveservices.azure.com/face/v1.0";
+        public const string SUBSCRIPTION_KEY = "64cebcb491f0443fb49817dcc2978851";
+
+
         [FunctionName("ImageAnalysis")]
         public static async Task Run(
-            [BlobTrigger("images/{name}", Connection = "pshellostorage")]
+            [BlobTrigger("images/{name}", Connection = "psazure1")]
             CloudBlockBlob blob, 
-            
             string name, 
             TraceWriter log,
-            
             [CosmosDB("pshelloazure", "images", ConnectionStringSetting ="psdb")]
             IAsyncCollector<FaceAnalysisResults> result)
         {
@@ -35,7 +39,9 @@ namespace PsHelloFunctions
 
         public static async Task<Face[]> GetAnalysisAsync(string url)
         {
-            var client = new FaceServiceClient("3813688213c04786a7bba4cbdd0e7f1d", "https://eastus.api.cognitive.microsoft.com/face/v1.0");
+            //https://australiaeast.dev.cognitive.microsoft.com/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039523a/console
+
+            var client = new FaceServiceClient(SUBSCRIPTION_KEY, ENDPOINT);
             var types = new[] { FaceAttributeType.Emotion };
             var result = await client.DetectAsync(url, false, false, types);
             return result;
