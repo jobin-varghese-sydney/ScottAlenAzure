@@ -12,8 +12,8 @@ namespace PsHelloAzure.Services
 
         public ImageAnalysisStore()
         {
-            var uri = new Uri("https://psdb.documents.azure.com:443/");
-            var key = "8pkIvNr358TuqJbdDNN9T1sj8meQuPH5RAEdjc0GeZbuCnkaFTD3uw7PEIJHSzaBL9jjqa0vKT3yTsFjvUEMKA==";
+            var uri = new Uri("https://psdbjobin.documents.azure.com:443/");
+            var key = "WZgq3AyH9H9VYxleldhbHFU1O0hOtorZMTE360pJib5C7R15RFkks8PNOI1mj2xsyGOYg0hz8RyOZUAbLNhI6g==";
             client = new DocumentClient(uri, key);
             imageAnalysisLink = UriFactory.CreateDocumentCollectionUri("pshelloazure", "images");
         }
